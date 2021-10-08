@@ -22,6 +22,11 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install setuptools wheel twine
+    - name: 🔢 Set version number
+      run: |
+        export version=${{ github.ref }}
+        sed -i "s|version="'"'"\(main\)"'"'"|version="'"'"${version##*/}"'"'"|" ./setup.py
+        cat ./setup.py
     - name: Build and publish
       env:
         TWINE_USERNAME: '__token__'
